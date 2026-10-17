@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário</title>
+</head>
+<body>
+
+<h1>Adcione o veículo</h1>
+<br>
+
+<form th:action="@{/veiculos}" th:object="${postForm}" method="post">
+    <label>Modelo</label>
+    <input type="text" th:field="*{modelo}">
+    <span th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}" style="color: red"></span>
+    <br><br>
+
+    <label>Placa</label>
+    <input type="text" th:field="*{placa}">
+    <span th:if="${#fields.hasErrors('placa')}" th:errors="*{placa}" style="color: red"></span>
+    <br><br>
+
+    <label>KM atual</label>
+    <input type="number" th:field="*{kmAtual}">
+    <span th:if="${#fields.hasErrors('kmAtual')}" th:errors="*{kmAtual}" style="color: red"></span>
+    <br><br>
+
+    <label>Tipo de veículo</label>
+    <select th:field="*{tipoVeiculo}">
+        <option value="">--Selecionar--</option>
+        <option th:each="item : ${categorias}" th:value="${item}" th:text="${item}"></option>
+    </select>
+    <span th:if="${#fields.hasErrors('tipoVeiculo')}" th:errors="${tipoVeiculo}" style="color: red"></span>
+    <br><br>
+
+    <button type="submit">Enviar</button>
+
+</form>
+
+</body>
+</html>

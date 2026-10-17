@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Motos</title>
+</head>
+<body>
+
+<h1>Lista de motos</h1>
+<br><br>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Modelo</th>
+        <th>Placa</th>
+        <th>KM atual</th>
+        <th>Tipo de veículo</th>
+        <th>Detalhes</th>
+        <th>Ação</th>
+    </tr>
+    <tr th:each="item : ${motos}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.modelo}"></td>
+        <td th:text="${item.placa}"></td>
+        <td th:text="${item.kmAtual}"></td>
+        <td th:text="${item.tipoVeiculo}"></td>
+        <td><a th:href="@{/veiculos/{id}(id=${item.id})}">Abrir</a></td>
+        <td>
+            <form th:if="${item.statusVeiculo.name() == 'DISPONIVEL'}" th:action="@{/veiculos/{id}/usar(id=${item.id})}" method="post" style="display: inline">
+                <button type="submit">Usar</button>
+            </form>
+            <form th:if="${item.statusVeiculo.name() == 'EM_USO'}" th:action="@{/veiculos/{id}/devolver(id=${item.id})}" method="post" style="display: inline">
+                <button type="submit">Disponibilizar</button>
+            </form>
+            <form th:if="${item.statusVeiculo.name() == 'DISPONIVEL'}" th:action="@{/veiculos/{id}/enviarManutencao(id=${item.id})}" method="post" style="display: inline">
+                <button type="submit">Enviar para manuntenção</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<br>
+<a th:href="@{/veiculos/novo}">Adicionar veículo</a>
+<br>
+<a th:href="@{/veiculos}">Lista completa</a>
+
+</body>
+</html>

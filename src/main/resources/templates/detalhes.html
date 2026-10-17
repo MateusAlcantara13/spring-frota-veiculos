@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes</title>
+</head>
+<body>
+
+<h1>Detalhes do veículo # <span th:text="${detalhes.id}"></span></h1>
+
+<br><br>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Modelo</th>
+        <th>Placa</th>
+        <th>KM atual</th>
+        <th>Tipo de veículo</th>
+        <th>Detalhes</th>
+        <th>Status do veículo</th>
+        <th>Ação</th>
+    </tr>
+    <tr>
+        <td th:text="${detalhes.id}"></td>
+        <td th:text="${detalhes.modelo}"></td>
+        <td th:text="${detalhes.placa}"></td>
+        <td th:text="${detalhes.kmAtual}"></td>
+        <td th:text="${detalhes.tipoVeiculo}"></td>
+        <td><a th:href="@{/veiculos/{id}(id=${detalhes.id})}">Abrir</a></td>
+        <td th:text="${detalhes.statusVeiculo}"></td>
+        <td>
+            <form th:if="${detalhes.statusVeiculo.name() == 'DISPONIVEL'}" th:action="@{/veiculos/{id}/usar(id=${detalhes.id})}" method="post" style="display: inline">
+                <button type="submit">Usar</button>
+            </form>
+            <form th:if="${detalhes.statusVeiculo.name() == 'EM_USO' or detalhes.statusVeiculo.name() == 'MANUTENCAO'}" th:action="@{/veiculos/{id}/devolver(id=${detalhes.id})}" method="post" style="display: inline">
+                <button type="submit">Disponibilizar</button>
+            </form>
+            <form th:if="${detalhes.statusVeiculo.name() == 'DISPONIVEL'}" th:action="@{/veiculos/{id}/enviarManutencao(id=${detalhes.id})}" method="post" style="display: inline">
+                <button type="submit">Enviar para manuntenção</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<br>
+<a th:href="@{/veiculos/novo}">Adicionar veículo</a>
+<br>
+<a th:href="@{/veiculos}">Lista completa</a>
+
+</body>
+</html>
